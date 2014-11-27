@@ -1,0 +1,16 @@
+<% if(user){%>
+  <div class="message-wrapper">
+    <ul class="messages-list"></ul>
+  </div>
+  <form action="" class="message-form row" id="messages-form">
+    <div class="col-sm-11">
+      <input class="form-control" type="text" value="" placeholder="Login" name="message" id="message">
+    </div>
+    <input type="submit" value="Send" class="btn btn-default col-sm-1">
+  </form>
+<%}else{%>
+  <div class="not-loged">
+    <h2>Welcome to Sails Chat</h2>
+    To see chat please login or <a href="/register">register</a>
+  </div>
+<%}%>
