@@ -21,6 +21,21 @@ module.exports = {
       value.password = hash;
       next();
     });
+  },
+
+  setOffline: function(id, socket){
+    this.findOneById(id, function(err, user){
+      if(user) {
+        user.loggedIn = false;
+        user.save(function (err) {
+          if (err) {
+            console.log(err)
+          } else {
+            //sails.sockets.blast('user_logged_out', user.id, socket);
+          }
+        });
+      }
+    })
   }
 
 };

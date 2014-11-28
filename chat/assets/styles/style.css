@@ -31,6 +31,7 @@
   overflow: auto;
   position: relative;
   margin-bottom: 20px;
+  border: 1px solid #e7e7e7;
 }
 .message-wrapper:before{
   content: '';

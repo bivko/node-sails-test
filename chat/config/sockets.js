@@ -23,7 +23,9 @@ module.exports.sockets = {
   ***************************************************************************/
   onConnect: function(session, socket) {
 
-    // By default, do nothing.
+    if (session.user) {
+      User.subscribe(socket, session.user);
+    }
 
   },
 
@@ -35,8 +37,15 @@ module.exports.sockets = {
   *                                                                          *
   ***************************************************************************/
   onDisconnect: function(session, socket) {
-
-    // By default: do nothing.
+    console.log(session.user);
+    if(session.user){
+      User.unsubscribe(socket, session.user);
+      // If the user has no more subscribers, they're offline
+      if (User.subscribers(session.user.id).length == 0) {
+        User.setOffline(session.user.id, socket);
+        session.user = null;
+      }
+    };
   },
 
 

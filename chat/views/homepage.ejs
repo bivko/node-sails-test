@@ -1,7 +1,17 @@
 <% if(user){%>
-  <div class="message-wrapper">
-    <ul class="messages-list"></ul>
+  <div class="row">
+    <div class="col-sm-10">
+      <legend>Chat</legend>
+      <div class="message-wrapper">
+        <ul class="messages-list"></ul>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <legend>Active Users</legend>
+      <ul class="users-list"></ul>
+    </div>
   </div>
+
   <form action="" class="message-form row" id="messages-form">
     <div class="col-sm-11">
       <input class="form-control" type="text" value="" placeholder="Login" name="message" id="message">

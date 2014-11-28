@@ -27,13 +27,27 @@ module.exports = {
 
 	login: function(req, res){
     var username = req.body.username,
-      password = req.body.password;
+      password = req.body.password,
+      sessionUser;
 
     User.findOneByUsername(username, function(err, user){
       if(user){
         bcrypt.compare(password, user.password, function(err, match){
           if(match){
+            User.subscribe(req, user);
             req.session.user = user;
+            sessionUser = user;
+
+            user.loggedIn = true;
+            user.save(function(err) {
+              if(err) {
+                console.log(err)
+              }else{
+                sails.sockets.blast('user_logged_in', user, req.socket);
+              }
+
+            });
+
             res.view('homepage', {
               user: user
             });
@@ -44,9 +58,23 @@ module.exports = {
   },
 
   logout: function(req, res){
+    User.findOneByUsername(req.session.user.username, function(err, user){
+      if(user){
+        user.loggedIn = false;
+        user.save(function(err) {
+          if(err) {
+            console.log(err)
+          }else{
+            sails.sockets.blast('user_logged_out', user.id, req.socket);
+          }
+
+        });
+      }
+    });
+
     req.session.user = null;
     res.view('homepage', {
-      user: req.session.user || false
+      user: false
     });
   }
 };

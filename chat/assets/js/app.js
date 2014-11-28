@@ -40,7 +40,8 @@
     $list = $('.messages-list'),
     $wrapper = $('.message-wrapper');
 
-  io.socket.request('/messages');
+  io.socket.request('/messages',{'forceNew': true });
+  io.socket.request('/user',{'forceNew': true });
 
   io.socket.on('messages', function(msg){
     if(msg.data && msg.data.body){
@@ -51,16 +52,31 @@
     }
   });
 
-  var getPastMessages = function(){
-    io.socket.get('/messages?limit=20&sort=createdAt desc', function(msg){
-      msg.reverse();
-      for(var i=0; i < msg.length; i++){
-        displayMessage(msg[i].body, msg[i].username, msg[i].createdAt);
+  io.socket.on('user_logged_in', function(user){
+    displayUser(user.id, user.username);
+  });
+
+  io.socket.on('user_logged_out', function(id){
+    $('.js-user-'+id).remove();
+  });
+
+
+  io.socket.get('/messages?limit=20&sort=createdAt desc', function(msg){
+    msg.reverse();
+    for(var i=0; i < msg.length; i++){
+      displayMessage(msg[i].body, msg[i].username, msg[i].createdAt);
+    }
+    scrollContainer();
+  });
+
+  io.socket.get('/user', function(user){
+    _.each(user, function(item){
+      if(item.loggedIn){
+        displayUser(item.id, item.username);
       }
-      scrollContainer();
     });
-  };
-  getPastMessages();
+  });
+
 
   $form.on('submit', function(e){
     e.preventDefault();
@@ -86,5 +102,9 @@
       _.escape(text)+
       '</li>'
     );
-  }
+  };
+
+  var displayUser = function(id, user){
+    $('.users-list').append('<li class="js-user-'+id+'">'+ _.escape(user) +'</li>');
+  };
 })(jQuery);
