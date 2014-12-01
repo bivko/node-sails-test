@@ -11,7 +11,7 @@
  */
 
 module.exports.sockets = {
-
+  sessionList: [],
   /***************************************************************************
   *                                                                          *
   * This custom onConnect function will be run each time AFTER a new socket  *
@@ -22,11 +22,25 @@ module.exports.sockets = {
   *                                                                          *
   ***************************************************************************/
   onConnect: function(session, socket) {
+    var expireDate = new Date(session.cookie.expires),
+      user = session.user,
+      that = this,
+      period = 30 * 1000;
 
-    if (session.user) {
-      User.subscribe(socket, session.user);
+    console.log('A socket with ID ' + socket.id + ' connected!');
+
+    if(user){
+      this.sessionList[socket.id] = setInterval(function(){
+        var beforeDate = new Date();
+        beforeDate.setTime(beforeDate.getTime() + period);
+
+        if(expireDate && beforeDate >= expireDate){
+          console.log('next period will set user Offline ');
+          User.setOffline(session.user.id, socket);
+          clearInterval(that.sessionList[socket.id]);
+        }
+      }, period);
     }
-
   },
 
 
@@ -37,15 +51,9 @@ module.exports.sockets = {
   *                                                                          *
   ***************************************************************************/
   onDisconnect: function(session, socket) {
-    console.log(session.user);
-    if(session.user){
-      User.unsubscribe(socket, session.user);
-      // If the user has no more subscribers, they're offline
-      if (User.subscribers(session.user.id).length == 0) {
-        User.setOffline(session.user.id, socket);
-        session.user = null;
-      }
-    };
+    if(this.sessionList[socket.id]){
+      clearInterval(this.sessionList[socket.id]);
+    }
   },
 
 

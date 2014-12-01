@@ -12,6 +12,7 @@ module.exports = {
     var user = false;
     if(req.session.user){
       Messages.subscribe(req.socket);
+
       user = req.session.user;
     }
     res.view('homepage', {
@@ -27,29 +28,33 @@ module.exports = {
 
 	login: function(req, res){
     var username = req.body.username,
-      password = req.body.password,
-      sessionUser;
+      password = req.body.password;
+
+    User.find(function foundUsers(err, users){
+      if(err) return next(err);
+      //User.subscribe(req.socket);
+      User.subscribe(req.socket, users);
+    });
 
     User.findOneByUsername(username, function(err, user){
       if(user){
         bcrypt.compare(password, user.password, function(err, match){
           if(match){
-            User.subscribe(req, user);
             req.session.user = user;
-            sessionUser = user;
 
             user.loggedIn = true;
-            user.save(function(err) {
-              if(err) {
-                console.log(err)
-              }else{
-                sails.sockets.blast('user_logged_in', user, req.socket);
-              }
+            user.save(function(err, user) {
+              if(err) return next(err);
 
-            });
+              User.publishUpdate(user.id, {
+                loggedIn: true,
+                id: user.id,
+                username: user.username
+              });
 
-            res.view('homepage', {
-              user: user
+              res.json({
+                id: user.id
+              });
             });
           }
         });
@@ -61,13 +66,13 @@ module.exports = {
     User.findOneByUsername(req.session.user.username, function(err, user){
       if(user){
         user.loggedIn = false;
-        user.save(function(err) {
-          if(err) {
-            console.log(err)
-          }else{
-            sails.sockets.blast('user_logged_out', user.id, req.socket);
-          }
+        user.save(function(err, user) {
+          if(err) return next(err);
 
+          User.publishUpdate(user.id, {
+            loggedIn: false,
+            id: user.id
+          });
         });
       }
     });

@@ -52,14 +52,20 @@
     }
   });
 
-  io.socket.on('user_logged_in', function(user){
-    displayUser(user.id, user.username);
+  io.socket.on('user', function(user){
+    if(localStorage['ChatUserId'] == user.id && !user.data.loggedIn){
+      location.reload();
+    }
+    if(user.data.loggedIn){
+      displayUser(user.data.id, user.data.username);
+    }else{
+      $('.js-user-'+user.data.id).remove();
+    }
   });
 
-  io.socket.on('user_logged_out', function(id){
-    $('.js-user-'+id).remove();
+  io.socket.on('session-expired', function(){
+    location.reload();
   });
-
 
   io.socket.get('/messages?limit=20&sort=createdAt desc', function(msg){
     msg.reverse();
@@ -89,6 +95,27 @@
         scrollContainer();
       });
     }
+  });
+
+  $('.login').on('submit', function(e){
+    e.preventDefault();
+    var username = $('#username').val();
+    var password = $('#password').val();
+
+    $.post( "/login", {
+      username: username,
+      password: password
+    }, function(resp) {
+      localStorage['ChatUserId'] = resp.id;
+      location.reload();
+    });
+  });
+
+  $('.js-logout').click(function(e){
+    e.preventDefault();
+    $.post( "/logout", function(resp) {
+      location.reload();
+    });
   });
 
   var scrollContainer = function(){

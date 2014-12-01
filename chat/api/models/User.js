@@ -26,13 +26,14 @@ module.exports = {
   setOffline: function(id, socket){
     this.findOneById(id, function(err, user){
       if(user) {
+        //sails.sockets.blast('user_logged_out', user.id, socket);
         user.loggedIn = false;
-        user.save(function (err) {
-          if (err) {
-            console.log(err)
-          } else {
-            //sails.sockets.blast('user_logged_out', user.id, socket);
-          }
+        user.save(function(err, user) {
+          if(err) return next(err);
+          User.publishUpdate(user.id, {
+            loggedIn: false,
+            id: user.id
+          });
         });
       }
     })
