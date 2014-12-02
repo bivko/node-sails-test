@@ -1,7 +1,11 @@
 <% if(user){%>
   <div class="row">
     <div class="col-sm-10">
-      <legend>Chat</legend>
+      <%if(chat){%>
+        <legend><%= chat.name %> Chat</legend>
+      <%}else{%>
+        <legend>Global Chat</legend>
+      <%}%>
       <div class="message-wrapper">
         <ul class="messages-list"></ul>
       </div>

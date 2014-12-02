@@ -60,3 +60,79 @@
 .messages-list .date{
   font-size: 12px;
 }
+.navbar-nav .glyphicon-plus{
+  font-size: 14px;
+  vertical-align: top;
+  color: green;
+}
+.user-list{
+  padding: 0;
+}
+.user-list .item{
+  list-style-type: none;
+  display: inline-block;
+  vertical-align: top;
+  width: 330px;
+  padding: 10px 20px;
+  margin: 0 15px 30px;
+  background: #f8f8f8;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+}
+.user-list .name{
+  font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid gray;
+}
+.user-list .head{
+  display: inline-block;
+  vertical-align: top;
+  width: 100px;
+  margin-top: 10px;
+}
+.user-list .content{
+  display: inline-block;
+  vertical-align: top;
+  width: 175px;
+  margin-top: 10px;
+}
+
+.user-list .change-role{
+  white-space: nowrap;
+}
+.user-list .role-update, .user-list .chats-update{
+  display: none;
+}
+.user-list .chats-allowed-list{
+  width: 150px;
+}
+.user-list .change-buttons{
+  display: inline-block;
+  vertical-align: top;
+  width: 10px;
+  margin-left: 10px;
+}
+.glyphicon{
+  margin-left: 10px;
+}
+.user-list .change-buttons .glyphicon{
+  margin: 10px 0 0 ;
+}
+
+
+
+
+
+.glyphicon-ok{
+   color: green;
+}
+.glyphicon-remove {
+  color: red;
+}
+.glyphicon:hover{
+  text-decoration: none;
+}
+legend{
+  text-transform: capitalize;
+}

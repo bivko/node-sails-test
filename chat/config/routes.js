@@ -32,13 +32,19 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': 'UserController.home',
+  '/': 'ChatController.openChat',
+  '/chats/:chat': 'ChatController.openChat',
+  'post /chat/addNewChat': 'ChatController.create',
+  '/chat/:id': 'ChatController.find',
+
 
   '/register': 'UserController.register',
-
   '/login': 'UserController.login',
+  '/logout': 'UserController.logout',
 
-  '/logout': 'UserController.logout'
+  '/user-list': 'UserController.showList',
+  'post /user/changeRole': 'UserController.changeRole'
+
 
   /***************************************************************************
   *                                                                          *

@@ -30,6 +30,10 @@ module.exports.policies = {
 
   MessagesController: {
     'create': 'messagePolicy'
+  },
+
+  ChatController: {
+    'create': 'chatPolicy'
   }
 
   /***************************************************************************

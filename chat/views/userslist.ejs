@@ -1,0 +1,59 @@
+<div class="page-header">
+  <h1>Users list</h1>
+</div>
+<ul class="user-list">
+  <%_.each(model, function(user){%>
+     <li class="item">
+       <div class="name"><%= user.username %></div>
+       <dl class="list">
+         <dt class="head">Registered:</dt>
+         <dd class="content"><%=moment(user.createAt).format('L')%></dd>
+         <dt class="head">Email:</dt>
+         <dd class="content"><%= user.email %></dd>
+         <dt class="head">Role:</dt>
+         <dd class="content">
+           <div class="js-role-info">
+             <span class="js-role"><%= user.role %></span>
+             &nbsp;&nbsp;&nbsp;
+             <a href="#" class="change-role js-change-role">change role</a>
+           </div>
+           <div class="role-update js-role-update">
+             <select id="roles">
+               <option <%if(user.role == 'admin'){%>selected<%}%> value="admin">admin</option>
+               <option <%if(user.role == 'moderator'){%>selected<%}%> value="moderator">moderator</option>
+               <option <%if(user.role == 'user'){%>selected<%}%> value="user">user</option>
+             </select>
+             <a href="#" class="glyphicon glyphicon-ok js-apply-role" data-id="<%= user.id %>"></a>
+             <a href="#" class="glyphicon glyphicon-remove js-cancel-role"></a>
+           </div>
+         </dd>
+         <dt class="head">Allowed:</dt>
+         <dd class="content">
+           <div class="js-chats-info">
+             <span class="js-chats">
+               <%if(user.chatsAllowed.length){%>
+                 <%= user.chatsAllowed.join(', ') %>
+               <%}else{%>
+                 chat not selected
+               <%}%>
+             </span>
+             &nbsp;&nbsp;&nbsp;
+             <a href="#" class="change-role js-change-chats">change chats list</a>
+           </div>
+           <div class="chats-update js-chats-update">
+             <select id="allowed" multiple class="chats-allowed-list">
+               <option value="" selected>Global</option>
+               <%_.each(chats, function(item){%>
+               <option value="item.name"><%= item.name %></option>
+               <%});%>
+             </select>
+             <div class="change-buttons">
+               <a href="#" class="glyphicon glyphicon-ok js-apply-chats" data-id="<%= user.id %>"></a>
+               <a href="#" class="glyphicon glyphicon-remove js-cancel-chats"></a>
+             </div>
+           </div>
+         </dd>
+       </dl>
+     </li>
+  <%})%>
+</ul>

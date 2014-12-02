@@ -8,11 +8,34 @@
 var bcrypt = require('bcrypt');
 
 module.exports = {
-
   attributes: {
-    username: 'string',
-    password: 'string',
-    loggedIn: 'boolean'
+    email: {
+      type: 'string',
+      unique: true,
+      required: true
+    },
+    username: {
+      type: 'string',
+      unique: true,
+      required: true
+    },
+    password: {
+      type: 'string',
+      required: true
+    },
+    loggedIn: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+    role: {
+      type: 'string',
+      enum: ['admin', 'moderator', 'user'],
+      defaultsTo: 'user'
+    },
+    chatsAllowed: {
+      type: 'array',
+      defaultsTo: []
+    }
   },
 
   beforeCreate: function(value, next){

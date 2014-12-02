@@ -17,6 +17,21 @@
           <a href="/" class="navbar-brand">Test Chat</a>
         </div>
         <%if(user){%>
+          <div class="col-sm-9">
+            <ul class="nav navbar-nav js-chat-list">
+              <li><a href="/">Global Chat</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav">
+              <%if(user.username === 'bivko' || user.role == 'admin' || user.role == 'moderator'){%>
+                <li class="js-add-chat-wrapper"><a href="/new-chat" class="js-add-chat"><span class="glyphicon glyphicon-plus"></span> Add Chat</a></li>
+              <%}%>
+              <%if(user.username === 'bivko' || user.role == 'admin'){%>
+                <li><a href="/user-list">All Users</a></li>
+              <%}%>
+            </ul>
+
+          </div>
           <div class="loged-user">
             Welcome <%= user.username %>
             &nbsp;|&nbsp;
@@ -28,7 +43,7 @@
           </ul>
           <form class="col-sm-4 login" action="/login" method="post">
             <div class="col-sm-5">
-              <input class="form-control" id="username" type="text" value="" placeholder="Login" name="username">
+              <input class="form-control" id="email" type="text" value="" placeholder="Email" name="email">
             </div>
             <div class="col-sm-5">
               <input class="form-control" id="password" type="password" value="" placeholder="Password" name="password">
