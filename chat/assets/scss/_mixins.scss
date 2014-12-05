@@ -1,0 +1,232 @@
+//  
+//  Mixins
+// 
+@mixin verticalGradient($val) {    
+    $start: colorCheck($val, 1);
+    $end: colorCheck($val, 2);
+    $back: colorCheck($val, 3);
+
+    background: $back; //* Old browsers */
+    @if (length($val) > 1){
+        background: -moz-linear-gradient(top, $start 0%, $end 100%); //* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $start), color-stop(100%, $end)); //* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, $start 0%, $end 100%); //* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, $start 0%, $end 100%); //* Opera 11.10+ */
+        background: -ms-linear-gradient(top, $start 0%, $end 100%); //* IE10+ */
+        background: linear-gradient(to bottom, $start 0%, $end 100%); //* W3C */
+    }
+}
+
+@mixin horisontalGradient($val) {
+    $start: colorCheck($val, 1);
+    $end: colorCheck($val, 2);
+    $back: colorCheck($val, 3);
+
+    background: $back; //* Old browsers */
+    @if (length($val) > 1){
+        background: -moz-linear-gradient(left, $start 0%, $end 100%); //* FF3.6+ */
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%,$start), color-stop(100%,$end)); //* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(left, $start 0%,$end 100%); //* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(left, $start 0%,$end 100%); //* Opera 11.10+ */
+        background: -ms-linear-gradient(left, $start 0%,$end 100%); //* IE10+ */
+        background: linear-gradient(to right, $start 0%,$end 100%); //* W3C */
+    }
+}
+@mixin horisontalThreeGradient($start, $center, $end, $postion: 50%, $back: $center) {
+    background: $back; //* Old browsers */
+    background: -moz-linear-gradient(left, $start 0%, $center $postion, $end 100%); //* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,$start), color-stop($postion,$center), color-stop(100%,$end)); //* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, $start 0%, $center $postion,$end 100%); //* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, $start 0%, $center $postion,$end 100%); //* Opera 11.10+ */
+    background: -ms-linear-gradient(left, $start 0%, $center $postion,$end 100%); //* IE10+ */
+    background: linear-gradient(to right, $start 0%, $center $postion,$end 100%); //* W3C */
+}
+
+@mixin columns($width, $count, $gap: 0) {
+    -moz-columns: $width $count;
+    -moz-column-gap: $gap;
+    -webkit-columns: $width $count;
+    -webkit-column-gap: $gap;
+    columns: $width $count;
+    column-gap: $gap;
+}
+
+@mixin borderRadius($val) {
+    $top: radiusCheck($val, 1);
+    $right: radiusCheck($val, 2);
+    $bottom: radiusCheck($val, 3);
+    $left: radiusCheck($val, 4);
+    
+    -webkit-border-radius: strip-unit($top)*1px strip-unit($right)*1px strip-unit($bottom)*1px strip-unit($left)*1px;
+    -moz-border-radius: strip-unit($top)*1px strip-unit($right)*1px strip-unit($bottom)*1px strip-unit($left)*1px;
+    border-radius: strip-unit($top)*1px strip-unit($right)*1px strip-unit($bottom)*1px strip-unit($left)*1px;
+}
+
+@mixin boxShadow($val: 2px 2px 4px rgba(0, 0, 0, 0.25)) {
+    @if($val){
+        -moz-box-shadow: $val;
+        -webkit-box-shadow: $val;
+        box-shadow: $val;
+    }
+}
+
+@mixin boxShadowIns($val: 0 0 5px rgba(0, 0, 0, 0.25)) {
+    @if($val){
+        -moz-box-shadow: inset $val;
+        -webkit-box-shadow: inset $val;
+        box-shadow: inset $val;
+    }
+}
+
+@mixin clearfix{
+    *zoom: 1;
+    &:before, &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+@mixin opacity($op) {
+    opacity: $op;
+    filter: alpha(opacity =($op*100))
+}
+
+@mixin transition($type: all, $time: 300, $method: linear) {
+    -webkit-transition: $type $time+ms $method;
+    -moz-transition: $type $time+ms $method;
+    -o-transition: $type $time+ms $method;
+    -ms-transition: $type $time+ms $method;
+    transition: $type $time+ms $method;
+}
+
+@mixin transformRotate($deg: 45deg){
+    -webkit-transform:rotate($deg);
+    -moz-transform:rotate($deg);
+    -ms-transform:rotate($deg);
+    transform:rotate($deg);
+}
+
+@mixin appearance(){
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+@mixin boxSizing($val: border-box){
+    -webkit-box-sizing: $val;
+    -moz-box-sizing: $val;
+    box-sizing: $val;
+}
+
+@mixin userSelectNone(){
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@mixin removeTextSelect($val: none){
+    -webkit-touch-callout: $val;
+    -webkit-user-select: $val;
+    -khtml-user-select: $val;
+    -moz-user-select: $val;
+    -ms-user-select: $val;
+    user-select: $val;
+}
+
+@mixin oneLineText(){
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+@mixin webkitScrollbarStyling(){
+    &::-webkit-scrollbar {
+        width: 16px;
+        height: 3px;
+    }
+    &::-webkit-scrollbar-button {
+        display: none;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar-track-piece {
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb { 
+        height: 100px;
+        background-color: #cbd0d2;
+        border-radius: 7px;
+        border-left: 5px solid #e6e9ec;
+        border-right: 5px solid #e6e9ec;
+    }
+    &::-webkit-scrollbar-corner {
+        background-color: transparent;
+    }
+    &::-webkit-resizer {
+        background-color: #666;
+    }
+}
+
+@mixin formatted ($textAlign:left) {
+  font: 1em "Tahoma", Tahoma, sans-serif;
+  padding: 0;
+  margin: 0;
+//  white-space: normal;
+  text-align: $textAlign;
+}
+
+@mixin placeholderColor($color: #acb3be){
+    &::-webkit-input-placeholder {
+       color: $color;
+    }
+
+    :-moz-placeholder { /* Firefox 18- */
+       color: $color;  
+    }
+
+    ::-moz-placeholder {  /* Firefox 19+ */
+       color: $color;  
+    }
+
+    :-ms-input-placeholder {  
+       color: $color;  
+    }
+}
+
+//  
+//  Functions
+//  
+
+@function strip-unit($num) {
+    @return $num / ($num * 0 + 1);
+}
+
+@function emCalc($pxSize, $emSize:$em-base) {
+  $value: strip-unit($pxSize) / strip-unit($emSize) * 1em;
+  @if ($value == 0em) { $value: 0; } // Turn 0em into 0
+  @return $value;
+}
+
+@function colorCheck($val, $i){
+    @if length($val) >= $i{
+        @return nth($val, $i);
+    }@else{
+        @return nth($val, 1);
+    }
+};
+@function radiusCheck($val, $i){
+    @if length($val) >= $i{
+        @return nth($val, $i);
+    }@else{
+        @if (($i==4) and (length($val) > 1)) {
+            @return nth($val, 2);
+        }@else{
+            @return nth($val, 1);
+        }
+    }
+};

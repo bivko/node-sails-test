@@ -35,6 +35,10 @@ module.exports = {
     chatsAllowed: {
       type: 'array',
       defaultsTo: []
+    },
+    location: {
+      type: 'integer',
+      defaultsTo: null
     }
   },
 

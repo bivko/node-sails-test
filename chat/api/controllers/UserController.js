@@ -9,131 +9,171 @@ var bcrypt = require('bcrypt');
 var moment = require('moment');
 
 module.exports = {
-  register: function(req, res){
-    res.view('register', {
-      user: req.session.user || false
-    });
-  },
-
-	login: function(req, res){
-    var email = req.body.email,
-      password = req.body.password;
-
-    User.find(function foundUsers(err, users){
-      if(err) return next(err);
-      User.subscribe(req.socket, users);
-    });
-
-    User.findOneByEmail(email, function(err, user){
-      if(user){
-        bcrypt.compare(password, user.password, function(err, match){
-          if(match){
-            req.session.user = user;
-
-            user.loggedIn = true;
-            user.save(function(err, user) {
-              if(err) return next(err);
-
-              User.publishUpdate(user.id, {
-                loggedIn: true,
-                id: user.id,
-                username: user.username
-              });
-
-              res.json({
-                id: user.id
-              });
-            });
-          }
+    register: function (req, res) {
+        res.view('register', {
+            user: req.session.user || false
         });
-      }
-    });
-  },
+    },
 
-  logout: function(req, res){
-    User.findOneByUsername(req.session.user.username, function(err, user){
-      if(user){
-        user.loggedIn = false;
-        user.save(function(err, user) {
-          if(err) return next(err);
+    login: function (req, res) {
+        if (req.socket){
+            var email = req.body.email,
+                password = req.body.password;
 
-          User.publishUpdate(user.id, {
-            loggedIn: false,
-            id: user.id
-          });
-        });
-      }
-    });
-
-    req.session.user = null;
-    res.view('homepage', {
-      user: false
-    });
-  },
-
-  showList: function(req, res){
-    if(req.session.user){
-      User.findOneByEmail(req.session.user.email, function(err, user){
-        var role = user.role,
-            name = user.username;
-
-        if(!err && (role == 'admin' || name == 'bivko')){
-
-          User.find(function(err, users){
-            if(err) return next(err);
-
-            Chat.find(function(err, chats){
-              if(err) return next(err);
-
-              res.view('userslist',{
-                user: req.session.user,
-                model: users,
-                chats: chats,
-                moment: moment
-              });
+            User.find(function foundUsers(err, users) {
+                if (err) return next(err);
+                User.subscribe(req.socket, users);
             });
 
-          });
+            User.findOneByEmail(email, function (err, user) {
+                if (user) {
+                    bcrypt.compare(password, user.password, function (err, match) {
+                        if (match) {
+                            req.session.user = user;
 
-        }else{
-          res.redirect('/');
-        }
-      });
-    }else{
-      res.redirect('/');
-    }
-  },
+                            user.loggedIn = true;
+                            user.save(function (err, user) {
+                                if (err) return next(err);
 
-  changeRole: function(req, res){
-    if(req.session.user){
-      User.findOneByEmail(req.session.user.email, function(err, user){
-        var role = user.role,
-            name = user.username;
+                                User.publishUpdate(user.id, {
+                                    loggedIn: true,
+                                    id: user.id,
+                                    username: user.username
+                                });
 
-        if(!err && (role == 'admin' || name == 'bivko')){
-          User.findOne(req.body.id, function foundUsers(err, user){
-            if(err) return next(err);
-
-            user.role = req.body.role;
-            user.save(function(err, user) {
-              if(err) return next(err);
-              res.json(user);
+                                res.json({
+                                    username: user.username,
+                                    id: user.id,
+                                    role: user.role
+                                });
+                            });
+                        }
+                    });
+                }
             });
-          });
         }else{
-          res.json({
-            error: true,
-            status: 2 // wrong role
-          });
+            res.badRequest();
         }
-      });
-    }else{
-      res.json({
-        error: true,
-        status: 1 // no user logged
-      });
+    },
+
+    logout: function (req, res) {
+        if (req.socket){
+            User.findOneByUsername(req.session.user.username, function (err, user) {
+                if (user) {
+                    user.loggedIn = false;
+                    user.save(function (err, user) {
+                        if (err) return next(err);
+
+                        User.publishUpdate(user.id, {
+                            loggedIn: false,
+                            id: user.id
+                        });
+                    });
+                }
+            });
+            req.session.user = null;
+            res.json({
+                success: true
+            })
+        }else{
+            res.badRequest();
+        }
+    },
+
+    showList: function (req, res) {
+        if (req.session.user) {
+            User.findOneByEmail(req.session.user.email, function (err, user) {
+                var role = user.role,
+                    name = user.username;
+
+                if (!err && (role == 'admin' || name == 'bivko')) {
+
+                    User.find(function (err, users) {
+                        if (err) return next(err);
+
+                        Chat.find(function (err, chats) {
+                            if (err) return next(err);
+
+                            res.view('userslist', {
+                                user: req.session.user,
+                                model: users,
+                                chats: chats,
+                                moment: moment
+                            });
+                        });
+
+                    });
+
+                } else {
+                    res.redirect('/');
+                }
+            });
+        } else {
+            res.redirect('/');
+        }
+    },
+
+    changeRole: function (req, res) {
+        var sessionUser = req.session.user
+        if (sessionUser) {
+            User.findOneByEmail(sessionUser.email, function (err, user) {
+                var role = user.role,
+                    name = user.username;
+
+                if (!err && (role == 'admin' || name == 'bivko')) {
+                    User.findOne(req.body.id, function foundUsers(err, user) {
+                        if (err) return next(err);
+
+                        user.role = req.body.role;
+                        user.save(function (err, user) {
+                            if (err) return next(err);
+                            res.json(user);
+                        });
+                    });
+                } else {
+                    res.json({error: true});
+                }
+            });
+        } else {
+            res.json({error: true});
+        }
+        ;
+    },
+
+    changeAllowedChats: function (req, res) {
+        var sessionUser = req.session.user
+        if (sessionUser) {
+            User.findOneByEmail(sessionUser.email, function (err, user) {
+                var role = user.role,
+                    name = user.username;
+
+                if (!err && (role == 'admin' || name == 'bivko')) {
+                    User.findOne(req.body.id, function foundUsers(err, user) {
+                        if (err) return next(err);
+
+                        Chat.findById(req.body.chatsAllowed, function (err, chats) {
+                            if (err) res.json({error: true});
+                            ;
+
+                            user.chatsAllowed = [];
+                            _.each(chats, function (chat) {
+                                user.chatsAllowed.push(_.pick(chat, 'id', 'name'));
+                            })
+                            user.save(function (err, user) {
+                                if (err) return next(err);
+                                res.json(user);
+                            });
+                        });
+                    });
+                } else {
+                    res.json({error: true});
+                }
+            });
+        } else {
+            res.json({error: true});
+        }
+        ;
     }
-  }
 
 };
 

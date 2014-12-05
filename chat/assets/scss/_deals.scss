@@ -1,0 +1,79 @@
+.deal-details {
+  .public-statuses {
+
+    input[type="checkbox"]:checked + label {
+      text-decoration: line-through;
+      color: $grey;
+    }
+  }
+
+
+  .deal-files-list {
+    margin: 1em 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      padding: 0.25em;
+      &:nth-child(2n+1) {
+        background: $navbar-default-bg;
+      }
+    }
+  }
+
+  fieldset {
+    margin-bottom: 2em;
+
+    &.first {
+      background: $navbar-default-bg;
+      padding: 1em 0;
+      border-radius: 3px;
+    }
+
+  }
+
+  .col-fee {
+    > * {
+      width: 20%;
+      float: left;
+      margin-left: 2em;
+    }
+  }
+}
+
+.deal-popup-container {
+  top: 1% !important;
+
+  .popup_container {
+    text-align: left !important;
+
+    .btn {
+      line-height: 1.7em;
+      margin: 0;
+      padding: 0 0.5em;
+      width: auto;
+    }
+
+    tr:hover {
+      td {
+        background: $grey-light;
+
+      }
+    }
+
+    .has-feedback {
+      position: relative;
+
+      .form-control-feedback {
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+    }
+
+    .select-list {
+      overflow-y: auto;
+      margin-bottom: 2em;
+    }
+  }
+}

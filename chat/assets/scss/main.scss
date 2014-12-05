@@ -1,0 +1,698 @@
+@import "../assets/bootstrap/scss/bootstrap";
+//@import url(../assets/bootstrap/css/bootstrap-theme.min.css);
+
+@import "variables";
+@import "mixins";
+@import "common";
+@import "footer-navbar";
+@import "form";
+@import "signin";
+@import "password";
+@import "calendar";
+@import "deals";
+
+
+a, input{
+    outline: none;
+    &:focus, &:active{
+        outline: none;
+    }
+}
+
+.pagination > li > span {
+  &:hover, &:focus {
+    background-color:#fff;
+  }
+}
+.glyphicon{
+    text-decoration: none;
+    outline: none;
+    &:hover, &:focus{
+        outline: none;
+        text-decoration: none;
+    }
+}
+.list-wrapper{
+    margin-top: 30px;
+    .empty{
+        font-weight: bold;
+        padding: 30px 0;
+        text-align: center;
+        font-size: 18px;
+        color: #777;
+    }
+}
+.listing-links{
+    text-align: right;
+}
+.glyphicon-edit, .glyphicon-ok{
+    color: #5cb85c;
+    margin-right: 20px;
+    &:hover, &:focus{
+        color: #449d44;
+    }
+}
+.glyphicon-remove, .glyphicon-ban-circle{
+    color: red;
+    &:hover, &:focus{
+        color: #a70f0f;
+    }
+}
+.search-filters{
+    .form-group{
+        margin: 0 10px 10px 0;
+        padding: 7px 15px;
+        position: relative;
+        .glyphicon {
+            vertical-align: top;
+            margin: 10px 0 0 10px;
+            color: #000;
+        }
+    }
+    .select2-container{
+        width: 250px;
+    }
+    .ms-parent{
+        width: 100% !important;
+    }
+    label{
+        display: block;
+    }
+    .rent-group{
+        .input-small{
+            width: 95px;
+        }
+    }
+    .neighborhoods-group, .facilities-group{
+        width: 330px;
+        .input-small{
+            width: 100%;
+        }
+    }
+    .address-group, .agents-group{
+        width: 260px;
+        .input-small{
+            width: 100%;
+        }
+    }
+    .reservatio-group{
+        width: 150px;
+        .input-small{
+            width: 100%;
+        }
+    }
+    .unit-group, {
+        width: 150px;
+        .input-small{
+            width: 100%;
+        }
+    }
+    .data-group{
+        .input-small{
+            width: 130px;
+        }
+    }
+    .bathrooms-group, .bedrooms-group, .featured-group,{
+        .select2-container{
+            width: 170px;
+        }
+    }
+    .status-group, .sort-group{
+        .select2-container{
+            width: 216px;
+        }
+    }
+    .lead-status-group{
+        width: 245px;
+        .select2-container{
+            width: 100%;
+        }
+    }
+    .lead-sort-group{
+        .select2-container{
+            width: 230px;
+        }
+    }    
+    .count-group{
+        .select2-container{
+            width: 120px;
+        }
+    }
+    .reset-filter{
+        position: absolute;
+        top: 11px;
+        right: 15px;
+        font-size: 11px;
+        font-weight: bold;
+    }
+}
+.has-datepicker{
+    background-image: url(../images/ico-datapicker.png);
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+
+.ui-widget{
+    font-size: emCalc(12);
+}
+.ui-widget-content .ui-state-default{
+    background: $green-light;
+    color: $text-color;
+}
+.ui-widget-content {
+    
+}
+.ui-datepicker-header{
+    background: $green-dark;
+    color: #fff;
+}
+.ui-datepicker {
+    .ui-state-active, .ui-state-hover{
+        color: #fff;
+        background: $green-dark;
+    }
+    .ui-datepicker-prev, .ui-datepicker-next{
+        border: none;
+        cursor: pointer;
+        background: $sprite;
+        width: 12px;
+        height: 18px;
+        top: 4px;
+        &.ui-state-hover{
+            background-color: transparent;
+            border: none;
+        }
+    }
+    .ui-datepicker-prev{
+        background-position: -120px -120px;
+        left: 8px;
+    }
+    .ui-datepicker-next{
+        background-position: -120px -140px;
+        right: 8px;
+    }
+    .ui-datepicker-prev-hover{
+        top: 4px;
+        left: 8px;
+    }
+    .ui-datepicker-next-hover{
+        top: 4px;
+        right: 8px;
+    }
+    
+}
+
+.reporter-group .ms-drop{
+    left: auto;
+    right: 0;
+}
+.pagination{
+    li{
+        cursor: pointer;
+    }
+}
+
+textarea.form-control{
+    resize: none;
+    height: 250px;
+    &.small{
+        height: 130px;
+    }
+}
+
+.details-images-list{
+    list-style: none;
+    padding: 0;
+    > .item{
+        display: inline-block;
+        vertical-align: top;
+        margin: 0 5px 13px;
+        position: relative;
+    }
+    .image{
+        height: 150px;
+    }
+    .delete{
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        width: 20px;
+        height: 21px;
+        background: #fff $sprite -100px 0;
+        border: 5px solid #fff;
+        text-indent: -3000px;
+        cursor: pointer;
+        @include boxShadow(-2px 2px 4px rgba(0, 0, 0, 0.25));
+    }
+}
+.buttons-list{
+    .btn{
+        line-height: 40px;
+        padding: 0 100px;
+        margin-left: 20px;
+        &:first-child{
+            margin: 0;
+        }
+    }
+}
+
+/* Popup */
+.popup-overlay{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #000;
+    background: rgba(0, 0, 0, .6);
+    z-index: 1100;
+}
+.popup-container{
+    position: fixed;
+    z-index: 1001;
+    top: 30%;
+    left: 50%;
+    margin: 0 0 0 -309px;
+    .title{
+        font-size: 18px;
+        margin-bottom: 15px;
+        width: 80%;
+        font-weight: 500;
+        color: #fff;
+        padding-left: 4px;
+    }
+    .close{
+        position: absolute;
+        top: 0;
+        right: 8px;
+        text-indent: -3000px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        background: $sprite -140px -120px;
+    }
+    .content{
+        width: 700px;
+        padding: 40px 60px;
+        border: 4px solid #fff;
+        background: #f1f4f6;
+        text-align: center;
+        @include borderRadius(3);
+        @include boxShadow;
+    }
+    .text{
+        font-size: 30px;
+        margin-bottom: 25px;
+        &.radio + .list, &.checkbox + .list{
+            text-align: left;
+        }
+    }
+    .success:before, .error:before{
+        content: '';
+        display: inline-block;
+        vertical-align: top;
+        width: 36px;
+        height: 36px;
+        margin: 2px 20px 0 0;
+        @include borderRadius(18);
+    }
+    .success:before{
+        background: $sprite -160px -120px #96cc51;
+        border: solid #96cc51;
+        border-width: 10px 6px 9px 7px;
+    }
+    .error:before{
+        background: $sprite -40px -140px #cc3d12;
+        border: solid #cc3d12;
+        border-width: 9px;
+    }
+    .list{
+        font-size: 18px;
+        font-weight: 500;
+        margin: -15px 0 25px;
+        list-style: none;
+        input[type="radio"] + label{
+            &:before{
+                top: 2px;
+            }
+            &:after{
+                top: 8px;
+            }
+        }
+    }
+    .item{
+        margin-top: 5px;
+        &:first-child{
+            margin-top: 0;
+        }
+    }
+    .button, .btn{
+        margin: 0 15px;
+        line-height: 40px;
+        padding: 0 10px;
+        width: 250px;
+    }
+    .file-wrapper{
+        border: 1px solid #ccc;
+        width: 100%;
+        height: 32px;
+        overflow: hidden;
+        position: relative;
+        @include borderRadius(3);
+        &.has-error{
+            border: 1px solid #a94442;
+            .file{
+                color: #a94442;
+            }
+        }
+        .lable{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 110px;
+            height: 30px;
+            line-height: 30px;
+            font-weight: normal;
+            border-right: 10px solid #f1f4f6;
+        }
+        .file{
+            width: 100%;
+            padding: 3px 30px;
+            outline: none;
+            display: block;
+            font: inherit;
+        }
+    }
+    .file-expected{
+        margin: 5px 0 25px;
+        text-align: left;
+        font-size: 11px;
+        margin-left: 115px;
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .popup-container .file-wrapper .file{
+        padding: 4px 18px;
+    }
+}
+.form-spacer{
+    text-align: center;
+    float: left;
+    padding: 6px 0;
+    width: 80px;
+    margin: 0 -40px;
+    + .form-two-selects{
+        padding-right: 15px;
+        padding-left: 30px;
+    }
+}
+.form-two-selects{
+    padding-right: 30px;
+}
+
+.require, .red{
+    color: red;
+    font-weight: bold;
+}
+
+.apartment-map{
+    height: 300px;
+}
+.nowrap{
+    white-space: nowrap;
+}
+.separetor-line{
+    margin: 50px 0;
+    border: 1px solid #ccc;
+}
+.container-fluid{
+    > span{
+        display: inline-block;
+        vertical-align: top;
+        margin: 8px 10px 0;
+    }
+}
+
+.bulk-wrapper{
+    .select2-container{
+        margin-bottom: 15px;
+    }
+    .bulk-header{
+        margin-top: 15px;
+        text-align: center;
+    }
+}
+
+a.dropdown-toggle:hover{
+    border-left: 1px solid #e7e7e7;
+    border-right: 1px solid #e7e7e7;
+    background: #fff !important;
+    padding: 15px 14px;
+}
+.dropdown:hover{
+    a.dropdown-toggle{
+        border-left: 1px solid #e7e7e7;
+        border-right: 1px solid #e7e7e7;
+        background: #fff;
+        padding: 15px 14px;
+    }
+    .dropdown-menu{
+        display: block;
+    }
+}
+.neighborhoods-list{
+    list-style: none;
+    padding: 0;
+    > .item{
+        display: inline-block;
+        vertical-align: top;
+        width: 330px;
+        min-height: 100px;
+        padding: 10px 20px 20px;
+        margin: 0 15px 30px;
+        background: #f8f8f8;
+        @include boxShadow;
+    }
+    .header{
+        font-weight: bold;
+        position: relative;
+        padding-right: 45px;
+        margin-bottom: 10px;
+        font-size: 15px;        
+    }
+    .link{
+        color: #777;
+    }
+    .sub-empty{
+        font-size: 13px;
+        border-top: 2px solid #e7e7e7;
+        padding-top: 5px;        
+    }
+    .sub-list{
+        padding-left: 25px;
+        list-style-type: disc;
+        border-top: 2px solid #e7e7e7;
+    }
+    .sub-item{
+        margin: 5px 0;
+        padding-right: 45px;
+        position: relative;
+    }
+    .icons{
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 13px;
+        width: 40px;
+    }
+    .glyphicon-edit{
+        margin-right: 10px;
+    }
+}
+.header-button{
+    margin-top: 25px;
+}
+
+.facilities-list{
+    list-style: none;
+    padding: 0;
+    > .item{
+        display: inline-block;
+        vertical-align: top;
+        width: 330px;
+        padding: 10px 20px;
+        margin: 0 15px 30px;
+        background: #f8f8f8;
+        @include boxShadow;
+    }
+    .header{
+        font-weight: bold;
+        position: relative;
+        padding-right: 45px;
+        font-size: 15px;        
+    }
+    .link{
+        color: #777;
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 10px;
+        width: 130px;
+    }
+    .icons{
+        position: absolute;
+        top: 50%;
+        right: 0;
+        font-size: 13px;
+        width: 40px;
+        margin-top: -10px;
+    }
+    .glyphicon-edit{
+        margin-right: 10px;
+    }
+}
+.facilitie-icon, .facilities-list{
+    margin-bottom: 15px;
+    .no-image{
+        border: 1px solid #ccc;
+        padding: 20px;
+        font-weight: bold;
+        display: inline-block;
+    }
+    .image{
+        max-width: 96px;
+    }
+}
+.sources-list{
+    margin-bottom: 40px;
+    .item{
+        &:nth-child(odd){
+            background: #f8f8f8;
+        }
+    }
+    td{
+        padding: 15px 10px;
+    }
+    .form-control{
+        width: 75%;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .icons{
+        width: 20%;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: right;
+    }
+    .hide-buttons{
+        .glyphicon, .glyphicon:before{
+            visibility: hidden;
+        }
+    }
+}
+.form-groups-separator{
+    margin-bottom: 15px;
+}
+.modified-date{
+    margin: -15px 0 20px;
+    color: #777;
+    font-size: 13px;
+    .date{
+        font-weight: bold;
+    }
+}
+.reservation-tabs{
+    margin-bottom: 40px;
+    > li > a{
+        padding: 15px 60px;
+    }
+}
+.reservation-wrapper{
+     .control-label{
+        padding-top: 0;
+     }
+}
+.reservation-basic{
+    margin-bottom: 40px;
+}
+.reservation-charges-title{
+    text-align: right;
+}
+textarea.reservation-note-field{
+    height: 120px;
+}
+.reservation-note-button{
+    margin: 10px 0 20px;
+    text-align: right;
+}
+.reservation-charges-apply{
+    display: none;
+}
+
+.dropdown-menu > .active{
+    > a, > a:focus{
+        color: #333;
+        background-color: transparent;
+    }
+    > a:hover{
+        background-color: #f5f5f5;
+        color: #262626;
+    }
+}
+.files-list {
+    margin: 1em 0;
+    padding: 0;
+    list-style: none;
+    li {
+        padding: 0.25em;
+        &:nth-child(2n+1) {
+            background: $navbar-default-bg;
+        }
+    }
+    .glyphicon-remove{
+        cursor: pointer;
+    }
+}
+.guest-list-wrapper{
+    margin-bottom: 10px;
+}
+.guests-wrapper.edit, .charges-wrapper.edit {
+    .control-label{
+        padding-top: 7px;
+    }
+}
+.reservation-notes-list{
+    list-style: none;
+    padding: 0;
+    .item{
+        margin-top: 20px;
+        &:first-child{
+            margin-top: 0;
+        }
+    }
+    .header{
+        margin-bottom: 5px;
+    }
+    .author{
+        margin-right: 15px;
+    }
+}
+.payment-part-total{
+    .control-label{
+        padding-top: 0;
+    }
+}
+.charges-edit-broker{
+    .form-control{
+        width: 30%;
+    }
+    .select2-container{
+        width: 30%;
+        margin-left: 20px;
+    }
+}
+.payment-options-month{
+    margin: 8px 0 30px;
+}
+.control-text{
+    padding-top: 7px;
+}

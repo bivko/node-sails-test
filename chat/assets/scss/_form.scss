@@ -1,0 +1,669 @@
+
+
+//
+//  Text fields
+//  
+.input-text, .input-text-small, .input-small, .input-large{
+    font-family: $main-font;
+    font-weight: 500;
+    line-height: 1;
+    vertical-align: top;
+    background: #fff;
+    color: $text-color;
+    border: 2px solid $grey-light;
+    max-width: 100%;
+    @include borderRadius(3);
+    @include placeholderColor;
+    &.validation-error{
+        border-color: red;
+    }
+}
+.input-text{
+    font-size: emCalc(18);
+    height: emCalc(46, 18);
+    padding: emCalc(12, 18) emCalc(15, 18);
+}
+.input-text-small{
+    font-size: emCalc(14);
+    height: emCalc(46, 14);
+    padding: emCalc(12, 14) emCalc(15, 14);
+}
+.input-small{
+    font-size: emCalc(14);
+    height: emCalc(36, 14);
+    padding: emCalc(7, 14) emCalc(15, 14);
+}
+.input-large{
+    font-size: emCalc(18);
+    height: emCalc(60, 18);
+    padding: emCalc(15, 18) emCalc(15, 18);
+}
+::-ms-clear, ::-ms-reveal{
+    width: 0;
+    height: 0;
+}
+
+//
+//  Textarea
+// 
+.textarea{
+    font-size: emCalc(18);
+    font-family: $main-font;
+    font-weight: 500;
+    background: #fff;
+    color: $text-color;
+    border: 2px solid $grey-light;
+    max-width: 100%;
+    min-height: emCalc(200, 18);
+    resize: none;
+    padding: emCalc(15, 18) emCalc(15, 18);
+    margin: 0;
+    @include borderRadius(3);
+    @include placeholderColor;
+    &.validation-error{
+        border-color: red;
+    }
+}
+
+.validation-error-message{
+    color: red;
+    font-weight: 500;
+    font-size: emCalc(12);
+    margin: emCalc(3, 12) 0 0 emCalc(15, 12);
+    display: inline-block;
+    vertical-align: top;
+}
+
+//
+//  Selects
+//
+
+$select-text-size: 14px;
+$select-text-dropdown-size: 14px;
+
+.select2-drop-mask {
+    background-color: #fff;
+    border: 0 none;
+    height: auto;
+    left: 0;
+    margin: 0;
+    min-height: 100%;
+    min-width: 100%;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    width: auto;
+    z-index: 9998;
+    @include opacity(0);
+}
+.select2-drop {
+    position: absolute;
+    border: 2px solid $grey-light;
+    border-top: none;
+    display: none;
+    z-index: 9999;
+    margin-top: emCalc(-1);
+    @include borderRadius(0 0 3px 3px);
+    @include verticalGradient(#fff);
+    .select2-input{
+        border: none;
+        position: absolute;
+        top: -31px;
+        left: 2px;
+        width: 75%;
+        font-size: emCalc($select-text-dropdown-size);
+        font-family: $main-font;
+        font-weight: 500;
+        line-height: 1;
+        height: emCalc(30, $select-text-dropdown-size);
+        padding: emCalc(7, $select-text-dropdown-size) 0 emCalc(7, $select-text-dropdown-size) emCalc(15, $select-text-dropdown-size);
+        color: $text-color;
+    }
+}
+.select2-drop-above{
+    margin: 0 0 emCalc(-1);
+    border: 2px solid $grey-light;
+    border-bottom: none;
+    @include borderRadius(3px 3px 0 0);
+    .select2-input{
+        top: auto;
+        bottom: -34px;
+    }
+}
+.select2-results{
+    width: 100% !important;
+    position: relative;
+    z-index: 10;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 200px;
+    padding: emCalc(10) 0 emCalc(10);
+    > li{
+        list-style: none;
+        font-size: emCalc($select-text-dropdown-size);
+        &.selected{
+            @include verticalGradient(#f7f7f7);
+        }
+    }
+}
+.select2-result-label, .select2-no-results{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: emCalc(30);
+    line-height: emCalc(30, $select-text-dropdown-size);
+    padding: 0 emCalc(15, $select-text-dropdown-size);
+    cursor: pointer;
+}
+.select2-highlighted{
+    .select2-result-label, .select2-no-results{
+        background: $text-color;
+        color: #fefefe;
+    }
+}
+.select2-result-with-children{
+    > .select2-result-label{
+        cursor: default;
+        font-weight: bold;
+        padding: emCalc(3) emCalc(7) emCalc(4);
+        margin: 0;
+        &:hover{
+            @include verticalGradient(transparent);
+        }
+    }
+}
+
+.select2-container{
+    position: relative;
+    display: inline-block; // inline-block for ie7 
+    zoom: 1;
+    *display: inline;
+    vertical-align: top;
+    padding: 0;
+    border: 0;
+    width: 100%;
+    font-size: emCalc($select-text-size);
+    &.done{
+        select{
+            background: transparent;
+            border: none;
+            height: 1px;
+            left: -2px;
+            margin: 0;
+            outline: medium none;
+            padding: 0;
+            position: relative;
+            width: 1px;
+            z-index: -10;
+            float: right;
+        }
+    }
+    &.validation-failed{
+        font-size: emCalc($select-text-size);
+    }
+    &.small-select{
+        .select2-choice, .select2-choices{
+            height: emCalc(36, $select-text-size);
+            line-height: emCalc(36, $select-text-size);
+            &:after{
+                width: 40px;
+                height: 36px;
+            }
+            &:before{
+                top: 13px;
+                right: 13px;
+            }
+        }
+        .select2-chosen{
+            line-height: emCalc(32, $select-text-size);
+        }
+    }
+    &.secondary{
+        .select2-choice, .select2-choices{
+            color: #b0b7b9;
+            &:after{
+                border: none;
+                background-color: transparent;
+            }
+            &:before{
+                background-position: -120px -60px;
+            }
+        }
+    }
+
+
+    .select2-choice, .select2-choices{
+        border: 2px solid $grey-light;
+        height: emCalc(36, $select-text-size);
+        line-height: emCalc(36, $select-text-size);
+        display: block;
+        text-decoration: none;
+        padding: 0 emCalc(60, $select-text-size) 0 emCalc(15, $select-text-size);
+        cursor: pointer;
+        position: relative;
+        width: 100% !important;
+        color: $text-color;
+        background: #fff;
+        @include borderRadius(3);
+        &:after{
+            content: ' ';
+            background: $sprite 0 0;
+            width: 40px;
+            height: 36px;
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: $green-light;
+            border: 2px solid $green;
+            z-index: 1;
+            @include borderRadius(0 3px 3px 0);
+        }
+        &:before{
+            content: '';
+            position: absolute;
+            top: 13px;
+            right: 13px;
+            width: 10px;
+            height: 6px;
+            background: $sprite -80px -20px;
+            z-index: 2;
+        }
+    }
+    .select2-chosen{
+        margin-right: emCalc(5, $select-text-size);
+        line-height: emCalc(32, $select-text-size);
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .select-scroll{
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: emCalc(12);
+        z-index: 11;
+        
+        @include boxSizing(content-box);
+        @include verticalGradient(#f2f2f2);
+    }
+    .scroll-drag{
+        width: emCalc(12);
+        position: absolute;
+        @include verticalGradient(#000);
+    }
+    .select2-search-field{
+        display: none;
+    }
+    .select2-choices{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .select2-search-choice{
+        display: inline-block;
+        vertical-align: top;
+        margin-left: emCalc(10);
+        &:first-child{
+            margin-left: 0;
+        }
+        > div{
+            display: inline-block;
+        }
+    }
+}
+.select2-container.select2-dropdown-open {
+    .select2-choice:after{
+        display: none;
+    }
+    .select2-choice:before{
+        background-position: -100px 0;
+        width: emCalc(11, $select-text-size);
+        height: emCalc(11, $select-text-size);
+        top: 10px;
+        right: 12px;
+    }
+    &.small-select{
+        .select2-choice:before{
+            top: 10px;
+            right: 12px;
+        }
+    }    
+}
+.select2-offscreen {
+    position: absolute;
+    left: -10000px;
+}
+
+.select2-result-label {
+    text-overflow: clip;
+    white-space: normal;
+}
+
+.small-select-dropdown{
+    .select2-input{
+        top: -31px;
+        height: emCalc(30, $select-text-dropdown-size);
+        padding: emCalc(7, $select-text-dropdown-size) 0 emCalc(7, $select-text-dropdown-size) emCalc(15, $select-text-dropdown-size);
+    }
+    &.select2-drop-above{
+        .select2-input{
+            top: auto;
+            bottom: -34px;
+        }
+    }
+}
+
+// Scrollbars 
+.select2-results::-webkit-scrollbar {
+    height: 16px;
+    width: 10px;
+}
+.select2-results::-webkit-scrollbar-button:start:decrement,
+.select2-results::-webkit-scrollbar-button:end:increment {
+    background-color: transparent;
+    display: block;
+    height: 0;
+}
+.select2-results::-webkit-scrollbar-track {
+    background-clip: padding-box;
+    border: solid transparent;
+    border-width: 0 0 0 4px;
+}
+.select2-results::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+  @include borderRadius(0);
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+.select2-results::-webkit-scrollbar:hover {
+    border: 1px solid $grey-light;
+}
+.select2-results::-webkit-scrollbar-thumb:vertical,
+.select2-results::-webkit-scrollbar-thumb:horizontal {
+    background-color: #c6c6c6;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+.select2-results::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: solid transparent;
+    border-width: 0;
+   @include boxShadow(inset 1px 1px 0 rgba(0,0,0,0.10));
+   @include boxShadow(inset 0 -1px 0 rgba(0,0,0,0.07));
+    background-clip: padding-box;
+}
+.select2-results::-webkit-scrollbar-thumb:hover {
+    background-color: #949494;
+}
+.select2-results::-webkit-scrollbar-thumb:active {
+    background-color: rgba(0, 0, 0, 0.5);
+  @include boxShadow(inset 1px 1px 3px rgba(0, 0, 0, 0.35));
+}
+.select2-hidden-accessible{
+    display: none;
+}
+.ms-parent{
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 100% !important;
+}
+.ms-choice{
+    text-align: left;
+    font-family: $main-font;
+    line-height: 1;
+    font-size: emCalc($select-text-size);
+    border: 2px solid $grey-light;
+    height: emCalc(36, $select-text-size);
+    line-height: emCalc(36, $select-text-size);
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    width: 100% !important;
+    color: $text-color;
+    background: #fff;
+    padding: 0;
+    @include borderRadius(3);
+    
+    span{
+        display: block;
+        padding: 0 emCalc(60, $select-text-size) 0 emCalc(15, $select-text-size);
+        line-height: emCalc(32, $select-text-size);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    div{
+        &:after{
+            content: ' ';
+            width: 40px;
+            height: 36px;
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background:$green-light;
+            border: 2px solid $green;
+            z-index: 1;
+            @include borderRadius(0 3px 3px 0);
+        }
+        &:before{
+            content: '';
+            position: absolute;
+            top: 13px;
+            right: 13px;
+            width: 10px;
+            height: 6px;
+            background: $sprite -80px -20px;
+            z-index: 2;
+        }
+        &.open{
+            &:after{
+                display: none;
+            }
+            &:before{
+                background-position: -100px 0;
+                width: emCalc(11, $select-text-size);
+                height: emCalc(11, $select-text-size);
+                top: 10px;
+                right: 10px;
+            }
+        }
+    }
+}
+.ms-drop{
+    display: none;
+    position: absolute;
+    top: 36px;
+    left: 0;
+    border: 2px solid $grey-light;
+    border-top-width: 1px;
+    z-index: 9999;
+    margin-top: emCalc(-2);
+    padding: emCalc(25) 0;
+    width: emCalc(862);
+    @include borderRadius(0 0 3px 3px);
+    @include verticalGradient(#fff);
+    > ul{
+        overflow: auto;
+        margin: 0;
+        padding: 0;
+    }
+    li{
+        display: inline-block;
+        vertical-align: top;
+        width: 33%;
+        padding: emCalc(10) 0 emCalc(2) emCalc(62);
+        font-size: 12px;
+        &.group, &.ms-select-all{
+            display: block;
+            width: 95%;
+        }
+    }
+    .ms-select-all{
+        font-size: emCalc(14);
+        padding: emCalc(3, 14) emCalc(10, 14) 0 emCalc(30, 14);
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+    .group{
+        font-size: emCalc(14);
+        text-transform: uppercase;
+        font-weight: 700;
+        margin: emCalc(25, 14) emCalc(10, 14) emCalc(2, 14) emCalc(30, 14);
+        padding: emCalc(15, 14) 0 emCalc(5, 14);
+        border-top: 2px solid #dbdbdb;
+        input{
+            display: none;
+        }
+    }
+}
+.ms-to-left{
+    .ms-drop{
+        left: auto;
+        right: 0;
+    }
+}
+.small-select{
+    .ms-choice{
+        height: emCalc(36, $select-text-size);
+        line-height: emCalc(36, $select-text-size);        
+        span{
+            padding: 0 emCalc(60, $select-text-size) 0 emCalc(15, $select-text-size);
+            line-height: emCalc(32, $select-text-size);
+        }
+        div{
+            &:after{
+                width: 40px;
+                height: 36px;
+            }
+            &:before{
+                top: 13px;
+                right: 13px;
+            }
+            &.open{
+               &:before{
+                    top: 10px;
+                    right: 10px;
+                }
+            }
+        }
+    }
+    .ms-drop{
+        top: 36px;
+    }
+}
+
+//
+//  Checkboxes 
+//
+input[type="checkbox"]{
+    left: -9999px;
+    position: absolute;
+    top: -9999px;
+    visibility: hidden;
+    +label {
+        cursor: pointer;
+        position: relative;
+        padding-left: 32px;
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+    }
+    + label:before{
+        content: " ";
+        position: absolute;
+        top: -1px;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #d9d9d9;
+        cursor: pointer;
+        background: #fff;
+        @include borderRadius(2);
+    }
+    &:checked{
+        + label{
+            &:before{
+                background: $green-light;
+                border-color: $green;
+            }
+            &:after{
+                content: '';
+                background: $sprite -100px -20px;
+                width: 11px;
+                height: 9px;
+                position: absolute;
+                top: 5px;
+                left: 5px;
+            }
+        }
+    }
+    &:disabled{
+        +label{
+            color: #c8cccd;
+            &:before{
+                @include opacity(.4);
+            }
+        }
+    }
+}
+
+//
+//  Radio buttons
+// 
+input[type="radio"]{
+    left: -9999px;
+    position: absolute;
+    top: -9999px;
+    visibility: hidden;
+    +label {
+        cursor: pointer;
+        position: relative;
+        padding-left: 32px;
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+    }
+    + label:before{
+        content: " ";
+        position: absolute;
+        top: -1px;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #d9d9d9;
+        cursor: pointer;
+        background: #fff;
+        @include borderRadius(10);
+    }
+    &:checked{
+        + label{
+            &:before{
+                background: $green-light;
+                border-color: $green;
+            }
+            &:after{
+                content: '';
+                background: #fff;
+                width: 8px;
+                height: 8px;
+                position: absolute;
+                top: 5px;
+                left: 6px;
+                @include borderRadius(5);
+            }
+        }
+    }
+    &:disabled{
+        +label{
+            color: #c8cccd;
+            &:before{
+                @include opacity(.4);
+            }
+        }
+    }
+}

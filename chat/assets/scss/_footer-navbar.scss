@@ -1,0 +1,33 @@
+$footerHeight:60px;
+
+body {
+  margin-bottom: $footerHeight;
+
+  > .container {
+    padding-top: $footerHeight;
+  }
+
+  .container {
+    width: 98%;
+
+    padding-left: $footerHeight/4;
+    padding-right: $footerHeight/4;
+
+    .text-muted {
+      margin: $footerHeight/3 0;
+    }
+  }
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: $footerHeight;
+  background: #f5f5f5;
+}
+
+code {
+  font-size: 80%;
+}

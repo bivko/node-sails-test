@@ -12,10 +12,10 @@ module.exports = {
       type: 'string',
       required: true
     },
-    url: {
+    type: {
       type: 'string',
-      unique: true,
-      required: true
+      enum: ['public', 'private'],
+      defaultsTo: 'public'
     }
   }
 };

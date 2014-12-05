@@ -39,11 +39,12 @@ module.exports.routes = {
 
 
   '/register': 'UserController.register',
-  '/login': 'UserController.login',
+  'post /login': 'UserController.login',
   '/logout': 'UserController.logout',
 
   '/user-list': 'UserController.showList',
-  'post /user/changeRole': 'UserController.changeRole'
+  'post /user/changeRole': 'UserController.changeRole',
+  'post /user/changeAllowedChats': 'UserController.changeAllowedChats'
 
 
   /***************************************************************************
