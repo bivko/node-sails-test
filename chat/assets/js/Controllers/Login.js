@@ -2,29 +2,26 @@ define([
     'underscore',
     'Controllers/ControllerBase',
 
-    'Views/Login/View'
-
-],function(_, ControllerBase, LoginView){
+    'Views/Login/View',
+    'Views/Register/View'
+],function(_, ControllerBase, LoginView, RegisterView){
 
     return ControllerBase.extend({
         titleHeader:'Sign in',
 
-        initialize:function(){
+        initialize: function(){
             ControllerBase.prototype.initialize.apply(this, arguments);
         },
 
         login: function(){
-            this.accountManager = this.options.accountManager;
-
             this.view = new LoginView({
-                model:this.accountManager
+                model: this.options.accountManager
             });
 
             this.listenTo(this.view, {
-                'login':this._onLogin
+                'login': this._onLogin
             });
 
-            // Show view
             this.options.applicationView.showContent(this.view);
         },
 
@@ -36,7 +33,19 @@ define([
             });
         },
 
-        _onLogin:function(data){
+        register: function () {
+            this.view = new RegisterView({
+                model: this.options.accountManager
+            });
+
+            this.listenTo(this.view, {
+                'register': this._onRegister
+            });
+
+            this.options.applicationView.showContent(this.view);
+        },
+
+        _onLogin: function(data){
             var that = this;
             io.socket.post('/login', data, function(user){
                 if(user.error){
@@ -46,6 +55,17 @@ define([
                     that.options.accountManager.set(user);
                     that.options.router.navigate('',true);
 
+                }
+            });
+        },
+
+        _onRegister: function(data){
+            var that = this;
+            io.socket.post('/user', data, function(user){
+                if(user.error){
+                    console.log('user login failed', user);
+                }else{
+                    console.log('user login success', user);
                 }
             });
         }

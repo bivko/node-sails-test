@@ -10,12 +10,14 @@ define([
         applicationRoutes :{
             "login" : { //controller name
                 //routes
+                '': 'login',
                 'login': 'login',
-                'logout': 'logout'
+                'logout': 'logout',
+                'register': 'register'
             },
 
             'chat': {
-                '': 'renderChat',
+                
                 'chat/(:id)': 'renderChat'
             }
         },
@@ -47,14 +49,7 @@ define([
 
                     if(backRoute && Constants.RolePages[role].indexOf(backRoute) != -1){
                         path = backRoute;
-                    } else {
-                        //path = Constants.RolePages[role][0].Url;
-
-                        //
-                        // @COMENTED FOR SERGEY
-                        //
                     }
-
                     this.navigate(path, {trigger:true});
                 },
 
