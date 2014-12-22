@@ -25,10 +25,10 @@ define([
         },
 
         subscribeToChats: function(){
+            var that = this;
             io.socket.request('/chat',{'forceNew': true });
             io.socket.on('chat', function(chat){
-                //appendChatName(chat.data.name, chat.data.id);
-                console.log('111', chat);
+                that._appendChatName(chat.data.name, chat.data.id);
             });
         },
 
@@ -40,20 +40,29 @@ define([
                     that.options.router.navigate('login',true);
                 }
                 if(chat.length){
-                    console.log('111', chat);
-//                    var $addWrapper = $('.js-add-chat-wrapper');
-//                    if($addWrapper.length){
-//                        _.each(chat, function(item){
-//                            $addWrapper.before('<li><a href="/chats/'+ item.id +'">'+ item.name +'</a></li>');
-//                        });
-//                    }else{
-//                        var $wrapper = $('.navbar-nav');
-//                        _.each(chat, function(item){
-//                            $wrapper.append('<li><a href="/chats/'+ item.id +'">'+ item.name +'</a></li>');
-//                        });
-//                    }
+                    var $addWrapper = $('.js-add-chat-wrapper');
+                    if($addWrapper.length){
+                        _.each(chat, function(item){
+                            $addWrapper.before('<li><a href="/chats/'+ item.id +'">'+ item.name +'</a></li>');
+                        });
+                    }else{
+                        var $wrapper = $('.navbar-nav');
+                        _.each(chat, function(item){
+                            $wrapper.append('<li><a href="/chats/'+ item.id +'">'+ item.name +'</a></li>');
+                        });
+                    }
                 }
             });
+        },
+
+        _appendChatName: function(name, url){
+            var $addWrapper = $('.js-add-chat-wrapper');
+            if($addWrapper.length){
+                $addWrapper.before('<li><a href="/chats/"+url>'+ _.escape(name) +'</a></li>');
+            }else{
+                var $wrapper = $('.navbar-nav');
+                $wrapper.append('<li><a href="/chats/"+url>'+ _.escape(name) +'</a></li>');
+            }
         }
 
     });

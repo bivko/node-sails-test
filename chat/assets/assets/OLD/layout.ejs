@@ -1,87 +1,65 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>NYC Short Lease Project</title>
+<html>
+  <head>
+    <title>New Sails App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--STYLES-->
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--STYLES END-->
+  </head>
 
-  <link rel="stylesheet" href="css/jquery-ui.min.css">
-  <link rel="stylesheet" href="css/main.css">
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="navbar-header col-sm-12">
+        <div class="navbar-header">
+          <a href="/" class="navbar-brand">Test Chat</a>
+        </div>
+        <%if(user){%>
+          <div class="col-sm-9">
+            <ul class="nav navbar-nav js-chat-list">
+              <li><a href="/">Global Chat</a></li>
+            </ul>
 
-  <script data-main="js/main.js?v.0.1" src="assets/requirejs/require.js?v.0.1" type="text/javascript"></script>
+            <ul class="nav navbar-nav">
+              <%if(user.username === 'bivko' || user.role == 'admin' || user.role == 'moderator'){%>
+                <li class="js-add-chat-wrapper"><a href="/new-chat" class="js-add-chat"><span class="glyphicon glyphicon-plus"></span> Add Chat</a></li>
+              <%}%>
+              <%if(user.username === 'bivko' || user.role == 'admin'){%>
+                <li><a href="/user-list">All Users</a></li>
+              <%}%>
+            </ul>
 
-  <script type="text/javascript">
-    var BASE_URL = '',
-            SOURCE_PATH = ''
-  </script>
+          </div>
+          <div class="loged-user">
+            Welcome <%= user.username %>
+            &nbsp;|&nbsp;
+            <a href="/logout" class="js-logout">Logout</a>
+          </div>
+        <%}else{%>
+          <ul class="nav navbar-nav col-sm-4">
+            <li><a href="register">Register</a></li>
+          </ul>
+          <form class="col-sm-4 login" action="/login" method="post">
+            <div class="col-sm-5">
+              <input class="form-control" id="email" type="text" value="" placeholder="Email" name="email">
+            </div>
+            <div class="col-sm-5">
+              <input class="form-control" id="password" type="password" value="" placeholder="Password" name="password">
+            </div>
+            <input type="submit" value="Login" class="btn btn-default col-sm-2">
+          </form>
+        <%}%>
+      </div>
+    </nav>
 
-</head>
+    <div class="wrapper">
+      <%- body %>
+    </div>
 
-<body id="main">
-</body>
+    <!--SCRIPTS-->
+
+    <!--SCRIPTS END-->
+  </body>
 </html>
-
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-  <!--<head>-->
-    <!--<title>New Sails App</title>-->
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">-->
-    <!--&lt;!&ndash;STYLES&ndash;&gt;-->
-    <!---->
-    <!--&lt;!&ndash;STYLES END&ndash;&gt;-->
-  <!--</head>-->
-
-  <!--<body>-->
-    <!--<nav class="navbar navbar-default">-->
-      <!--<div class="navbar-header col-sm-12">-->
-        <!--<div class="navbar-header">-->
-          <!--<a href="/" class="navbar-brand">Test Chat</a>-->
-        <!--</div>-->
-        <!--<%if(user){%>-->
-          <!--<div class="col-sm-9">-->
-            <!--<ul class="nav navbar-nav js-chat-list">-->
-              <!--<li><a href="/">Global Chat</a></li>-->
-            <!--</ul>-->
-
-            <!--<ul class="nav navbar-nav">-->
-              <!--<%if(user.username === 'bivko' || user.role == 'admin' || user.role == 'moderator'){%>-->
-                <!--<li class="js-add-chat-wrapper"><a href="/new-chat" class="js-add-chat"><span class="glyphicon glyphicon-plus"></span> Add Chat</a></li>-->
-              <!--<%}%>-->
-              <!--<%if(user.username === 'bivko' || user.role == 'admin'){%>-->
-                <!--<li><a href="/user-list">All Users</a></li>-->
-              <!--<%}%>-->
-            <!--</ul>-->
-
-          <!--</div>-->
-          <!--<div class="loged-user">-->
-            <!--Welcome <%= user.username %>-->
-            <!--&nbsp;|&nbsp;-->
-            <!--<a href="/logout" class="js-logout">Logout</a>-->
-          <!--</div>-->
-        <!--<%}else{%>-->
-          <!--<ul class="nav navbar-nav col-sm-4">-->
-            <!--<li><a href="register">Register</a></li>-->
-          <!--</ul>-->
-          <!--<form class="col-sm-4 login" action="/login" method="post">-->
-            <!--<div class="col-sm-5">-->
-              <!--<input class="form-control" id="email" type="text" value="" placeholder="Email" name="email">-->
-            <!--</div>-->
-            <!--<div class="col-sm-5">-->
-              <!--<input class="form-control" id="password" type="password" value="" placeholder="Password" name="password">-->
-            <!--</div>-->
-            <!--<input type="submit" value="Login" class="btn btn-default col-sm-2">-->
-          <!--</form>-->
-        <!--<%}%>-->
-      <!--</div>-->
-    <!--</nav>-->
-
-    <!--<div class="wrapper">-->
-      <!--<%- body %>-->
-    <!--</div>-->
-
-    <!--&lt;!&ndash;SCRIPTS&ndash;&gt;-->
-    <!---->
-    <!--&lt;!&ndash;SCRIPTS END&ndash;&gt;-->
-  <!--</body>-->
-<!--</html>-->

@@ -14,6 +14,9 @@ define([
         },
 
         login: function(){
+            var result = this._isLoggedIn();
+            if(result){return result}
+
             this.view = new LoginView({
                 model: this.options.accountManager
             });
@@ -30,10 +33,14 @@ define([
             io.socket.post('/logout', function(){
                 that.options.accountManager.clear();
                 that.options.router.navigate('login', true);
+                localStorage['SAILS-PrivateUser'] = '';
             });
         },
 
         register: function () {
+            var result = this._isLoggedIn();
+            if(!result){return result}
+
             this.view = new RegisterView({
                 model: this.options.accountManager
             });
@@ -53,7 +60,7 @@ define([
                 }else{
                     localStorage['SAILS-PrivateUser'] = JSON.stringify(user);
                     that.options.accountManager.set(user);
-                    that.options.router.navigate('',true);
+                    that.options.router.navigate('chat/',true);
 
                 }
             });
@@ -68,6 +75,14 @@ define([
                     console.log('user login success', user);
                 }
             });
+        },
+
+        _isLoggedIn: function(){
+            console.log('333', localStorage['SAILS-PrivateUser']);
+            if(localStorage['SAILS-PrivateUser']){
+                this.options.router.navigate('chat/',true);
+            }
+            return localStorage['SAILS-PrivateUser'];
         }
     });
 });

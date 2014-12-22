@@ -11,14 +11,13 @@ define([
             "login" : { //controller name
                 //routes
                 '': 'login',
-                'login': 'login',
-                'logout': 'logout',
-                'register': 'register'
+                'login(/)': 'login',
+                'logout(/)': 'logout',
+                'register(/)': 'register'
             },
 
             'chat': {
-                
-                'chat/(:id)': 'renderChat'
+                'chat(/)(:id)': 'renderChat'
             }
         },
 

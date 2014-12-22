@@ -2,27 +2,39 @@
     <a class="navbar-brand" href="./#">Sails Chat</a>
 </div>
 <div class="collapse navbar-collapse" id="menu">
-    <ul class="nav navbar-nav navbar-right">
-        <li><a href="#logout" class="js-logout">Sign out <span class="glyphicon glyphicon-off"></span></a></li>
-    </ul>
-    <ul class="nav navbar-nav">
-        <li><a href="#listing/all">Listing</a></li>
-        <li><a href="#leads/all">Leads</a></li>
-        <li><a href="#deals">Deals</a></li>
-        <li><a href="#reservation">Reservation</a></li>
-        <li><a href="#calendar">Calendar</a></li>
-
-        <li class="dropdown">
-            <a href="#settings" class="dropdown-toggle" data-toggle="dropdown">Settings <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-                <%if(JSON.parse(localStorage['SAILS-PrivateUser']).RoleName === 'Admin'){%>
-                    <li><a href="#settings/users">Users</a></li>
-                    <li><a href="#settings/neighborhoods">Neighborhoods</a></li>
-                    <li><a href="#settings/facilities">Facilities</a></li>
-                    <li><a href="#settings/sources">Lead sources</a></li>
-                <%}%>
-                <li><a href="#settings/updatePassword">Update my password</a></li>
+    <%if(user){%>
+        <div class="col-sm-9">
+            <ul class="nav navbar-nav js-chat-list">
+                <li><a href="#chat/">Global Chat</a></li>
             </ul>
-        </li>
-    </ul>
+
+            <ul class="nav navbar-nav">
+                <%if(user.username === 'bivko' || user.role == 'admin' || user.role == 'moderator'){%>
+                    <li class="js-add-chat-wrapper"><a href="#new-chat/" class="js-add-chat"><span class="glyphicon glyphicon-plus"></span> Add Chat</a></li>
+                <%}%>
+                <%if(user.username === 'bivko' || user.role == 'admin'){%>
+                    <li><a href="#user-list/">All Users</a></li>
+                <%}%>
+            </ul>
+
+        </div>
+        <div class="loged-user">
+            Welcome <b><%= user.username %></b>
+            &nbsp;|&nbsp;
+            <a href="#logout/" class="js-logout">Sign out <span class="glyphicon glyphicon-off"></span></a>
+        </div>
+    <%}else{%>
+        <ul class="nav navbar-nav col-sm-4">
+            <li><a href="register">Register</a></li>
+        </ul>
+        <form class="col-sm-4 login" action="/login" method="post">
+            <div class="col-sm-5">
+                <input class="form-control" id="email" type="text" value="" placeholder="Email" name="email">
+            </div>
+            <div class="col-sm-5">
+                <input class="form-control" id="password" type="password" value="" placeholder="Password" name="password">
+            </div>
+            <input type="submit" value="Login" class="btn btn-default col-sm-2">
+        </form>
+    <%}%>
 </div><!--/.nav-collapse -->
