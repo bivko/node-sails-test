@@ -119,5 +119,9 @@ function (Backbone, Marionette, Router, AccountManager, ApplicationView) {
         }
     });
 
+    io.socket.on('session-expired', function(){
+        location.reload();
+    });
+
     return app;
 });

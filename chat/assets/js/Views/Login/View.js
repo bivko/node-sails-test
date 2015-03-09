@@ -25,7 +25,6 @@ define([
                 data = $form.serializeJSON();
 
             this.trigger('login', data);
-
             return false;
         },
 

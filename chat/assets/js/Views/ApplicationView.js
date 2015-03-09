@@ -16,6 +16,10 @@ define([
 
         initialize:function(params){
             this.model = params.model;
+
+            this.listenTo(this.model, {
+                'userUpdate': this.renderHeader
+            }, this);
         },
 
         onRender:function(){
@@ -25,7 +29,7 @@ define([
 
         renderHeader: function() {
             this.header.show(new HeaderView({
-                model:this.model,
+                model: this.model,
                 app: this.options.app
             }));
         },

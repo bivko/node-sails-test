@@ -39,28 +39,7 @@ define([
         },
 
         _initListeners:function(){
-            var that = this;
-
-            this.listenTo(this.application.accountManager,{
-                'login-success':function(backRoute){
-                    var role = that.application.accountManager.get('RoleName'),
-                        path;
-
-                    if(backRoute && Constants.RolePages[role].indexOf(backRoute) != -1){
-                        path = backRoute;
-                    }
-                    this.navigate(path, {trigger:true});
-                },
-
-                'logout':function(param){
-                    that.application.accountManager._clearData();
-                    this.navigate("login", { trigger: true });
-                },
-
-                'goTo' : function(path, trigger){
-                    this.navigate(path, {trigger: trigger!==undefined ? trigger : true});
-                }
-            }, this);
+            
         },
 
         _getRoutes:function(route){

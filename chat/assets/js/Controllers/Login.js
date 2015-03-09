@@ -29,17 +29,16 @@ define([
         },
 
         logout: function(){
-            var that = this;
-            io.socket.post('/logout', function(){
-                that.options.accountManager.clear();
-                that.options.router.navigate('login', true);
-                localStorage['SAILS-PrivateUser'] = '';
-            });
+            this.options.accountManager.clear();    
+            this.options.accountManager.trigger('userUpdate');
+            localStorage['SAILS-PrivateUser'] = '';
+            this.options.router.navigate('login', true);
+            io.socket.post('/logout');
         },
 
         register: function () {
             var result = this._isLoggedIn();
-            if(!result){return result}
+            if(result){return result}
 
             this.view = new RegisterView({
                 model: this.options.accountManager
@@ -60,8 +59,8 @@ define([
                 }else{
                     localStorage['SAILS-PrivateUser'] = JSON.stringify(user);
                     that.options.accountManager.set(user);
+                    that.options.accountManager.trigger('userUpdate');
                     that.options.router.navigate('chat/',true);
-
                 }
             });
         },
@@ -69,17 +68,15 @@ define([
         _onRegister: function(data){
             var that = this;
             io.socket.post('/user', data, function(user){
-                if(user.error){
-                    console.log('user login failed', user);
-                }else{
+                if(!user.error){
                     console.log('user login success', user);
+                    that._onLogin(data)
                 }
             });
         },
 
         _isLoggedIn: function(){
-            console.log('333', localStorage['SAILS-PrivateUser']);
-            if(localStorage['SAILS-PrivateUser']){
+            if(localStorage['SAILS-PrivateUser'] && localStorage['SAILS-PrivateUser'].name){
                 this.options.router.navigate('chat/',true);
             }
             return localStorage['SAILS-PrivateUser'];

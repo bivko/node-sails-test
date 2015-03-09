@@ -1,0 +1,5 @@
+<li class="item">
+    <span class="date"><%= moment(createdAt).format('HH:mm:ss')%></span>
+    <b class="user">[<%= username %>]</b>
+    <%= _.escape(body) %>
+</li>

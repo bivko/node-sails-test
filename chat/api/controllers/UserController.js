@@ -47,7 +47,17 @@ module.exports = {
                                     role: user.role
                                 });
                             });
+                        }else{
+                            res.badRequest({
+                                message: 'Wrong Password or Email',
+                                error: true
+                            });
                         }
+                    });
+                }else{
+                    res.badRequest({
+                        message: 'Wrong Password or Email',
+                        error: true
                     });
                 }
             });
@@ -172,7 +182,6 @@ module.exports = {
         } else {
             res.json({error: true});
         }
-        ;
     }
 
 };
